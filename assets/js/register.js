@@ -67,14 +67,7 @@
     // Firebase configuration - ADD YOUR ACTUAL CONFIG HERE
     const firebaseConfig = {
       // Your Firebase config here
-         apiKey: "AIzaSyCA-Z7W4FWDNsky6t4UkmqYDvJQRlJCc0k",
-    authDomain: "rscs-1822d.firebaseapp.com",
-    databaseURL: "https://rscs-1822d-default-rtdb.firebaseio.com",
-    projectId: "rscs-1822d",
-    storageBucket: "rscs-1822d.firebasestorage.app",
-    messagingSenderId: "659401014566",
-    appId: "1:659401014566:web:b5bda26856af36233dd5e7",
-    measurementId: "G-Y2GMNNQJX5"
+         
     };
 
     // Initialize Firebase
