@@ -1,0 +1,11 @@
+# System files
+desktop.ini
+firebase-messaging-sw.js
+
+# Environment files
+.env
+
+# Sensitive config
+assets/json
+assets/js/supabaseconfig.js
+assets/js/firebaseconfig.js

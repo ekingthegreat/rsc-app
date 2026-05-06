@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users | RSC Dashboard</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/captain.css">
+  
+</head>
+
+<body>
+    <div class="header">
+        <h1>RSC</h1>
+        <small>Ready to serve the community</small>
+    </div>
+
+    <div class="main-container">
+        <div class="content">
+            <div class="page-title">
+                <h2>User Management</h2>
+                <div class="page-subtitle">Manage user accounts and pending approvals</div>
+            </div>
+
+            <div class="user-management-content">
+                <div class="approval-section">
+                    <h3 class="approval-title"><i class="fas fa-user-clock"></i> Pending User Approvals</h3>
+                    
+                    <div id="pendingUsersContainer" class="pending-users-container">
+                        <div class="loading-message">Loading pending users...</div>
+                    </div>
+                </div>
+
+                <div class="user-tables">
+                    <div class="user-table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Barangay Officials</h3>
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="search-input" placeholder="Search officials..." id="officialSearch">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="user-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Username</th>
+                                        <th>Address</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="officialsTableBody">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center; padding: 20px;">
+                                            Loading barangay officials...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="managementModal" class="management-modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Manage User</h3>
+            <p id="modalMessage">Are you sure you want to perform this action?</p>
+            <div class="modal-actions">
+                <button id="cancelBtn" class="cancel-btn">Cancel</button>
+                <button id="confirmActionBtn" class="confirm-block-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-container">
+            <a href="home.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+          
+            <a href="track.html" class="nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Track</span>
+            </a>
+            <a href="notification.html" class="nav-item">
+                <i class="fas fa-bell"></i>
+                <span>Notification</span>
+            </a>
+            <a href="history.html" class="nav-item ">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+          <a href="captain.html" class="nav-item active">
+                <i class="fas fa-users-cog"></i>
+                <span>Mng User</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="assets/js/firebaseconfig.js"></script>
+    <script src="assets/js/session.js"></script>
+    <script src="assets/js/block.js"></script>
+    <script src="assets/js/captain.js"></script>
+</body>
+</html>

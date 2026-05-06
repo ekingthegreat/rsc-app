@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSC Map - Rescue Operations</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/response.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+
+<body>
+  <div id="sessionCheckOverlay"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; justify-content: center; align-items: center;">
+    <div style="text-align: center;">
+      <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #b30000; margin-bottom: 1rem;"></i>
+      <p>Checking session...</p>
+    </div>
+  </div>
+
+  <div class="header">
+    <h1>RSC</h1>
+    <small>Ready to serve the community</small>
+  </div>
+
+  <div class="main-container">
+    <div class="content">
+      <div class="map-container">
+        <div id="map" style="width: 100%; height: 100%;"></div>
+
+
+        <div class="map-controls">
+          <button class="map-btn active" title="Current Location" id="currentLocationBtn" aria-label="Current location">
+            <i class="fas fa-crosshairs"></i>
+          </button>
+          <button class="map-btn" title="Toggle map type" id="layersBtn" aria-label="Toggle map type">
+            <i class="fas fa-layer-group"></i>
+          </button>
+          <button class="map-btn" title="Clear Route" id="clearRouteMapBtn" aria-label="Clear route">
+            <i class="fas fa-route"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-title">Legend</div>
+        <div class="legend-grid">
+          <div class="legend-item">
+            <div class="legend-icon landslide">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Landslide</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon fire">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Fire</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon earthquake">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Earthquake</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon flood">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Flood</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon storm">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Storm Surge</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon ems">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Emergency Medical Services</span>
+          </div>
+        </div>
+      </div>
+      <div class="rescue-dashboard" id="rescueDashboard">
+        <div class="dashboard-header">
+          <div class="dashboard-title">Rescue Operations Dashboard</div>
+          <div class="live-indicator">
+            <div class="pulse"></div>
+            <span>LIVE UPDATES</span>
+          </div>
+        </div>
+
+        <div class="dashboard-stats" id="dashboardStats">
+        </div>
+
+        <div class="rescue-filters">
+          <select class="filter-select" id="emergencyTypeFilter">
+            <option value="all">All Emergency Types</option>
+            <option value="landslide">Landslide</option>
+            <option value="fire">Fire</option>
+            <option value="earthquake">Earthquake</option>
+            <option value="flood">Flood</option>
+            <option value="storm">Storm Surge</option>
+            <option value="ems">Emergency Medical Services</option>
+          </select>
+
+          <select class="filter-select" id="statusFilter">
+            <option value="all">All Statuses</option>
+            <option value="reported">Reported</option>
+            <option value="accepted">Accepted</option>
+            <option value="responding">Responding</option>
+            <option value="mapped">Completed</option>
+          </select>
+        </div>
+
+        <div class="rescue-actions" id="rescueActions">
+        </div>
+
+        <div id="teamStatus" class="team-status available">
+          <i class="fas fa-info-circle"></i> Your team is available for rescue missions
+        </div>
+
+        <div class="rescue-progress" id="rescueProgress" style="display: none;">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <div class="progress-labels">
+            <span>Accepted</span>
+            <span>En Route</span>
+            <span>On Site</span>
+            <span>Completed</span>
+          </div>
+        </div>
+
+        <div class="rescue-details" id="rescueDetails" style="display: none;">
+          <h4>Current Mission Details</h4>
+          <div class="detail-item">
+            <span class="detail-label">Emergency Type:</span>
+            <span class="detail-value" id="currentEmergencyType">-</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Location:</span>
+            <span class="detail-value" id="currentLocation">-</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Distance:</span>
+            <span class="detail-value" id="currentDistance">-</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">ETA:</span>
+            <span class="detail-value" id="currentETA">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="locations-list" id="locationsList">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i> Loading locations...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="reportModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <div id="modalMediaContainer">
+        <img id="modalMedia" class="modal-media" src="" alt="Report Media">
+      </div>
+      <h3 class="modal-title" id="modalTitle">Report Title</h3>
+      <div class="modal-info">
+        <div class="modal-info-item">
+          <span class="modal-label">Emergency Type</span>
+          <span class="modal-value" id="modalType">Earthquake</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Status</span>
+          <span class="modal-value" id="modalStatus">Reported</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Date</span>
+          <span class="modal-value" id="modalDate">2025-09-27</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Time</span>
+          <span class="modal-value" id="modalTime">11:17 PM</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Latitude</span>
+          <span class="modal-value" id="modalLat">14.599513</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Longitude</span>
+          <span class="modal-value" id="modalLng">120.984234</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Reported By</span>
+          <span class="modal-value" id="modalReporter">Michael Martinez</span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-label">Description</span>
+          <span class="modal-value" id="modalDescription">No description provided</span>
+        </div>
+      </div>
+
+      <div class="rescue-action-section">
+        <h4>Rescue Actions</h4>
+        <div id="rescueStatus" class="rescue-status pending">
+          <i class="fas fa-info-circle"></i> Rescue not yet accepted
+        </div>
+
+        <div id="rescueTeamsSection" style="display: none;">
+          <h5>Response Teams Assigned:</h5>
+          <div id="rescueTeamsList" class="rescue-teams-list">
+          </div>
+        </div>
+
+        <div class="rescue-action-buttons">
+          <button class="rescue-btn" id="acceptRescueBtn">
+            <i class="fas fa-check-circle"></i> Accept Rescue
+          </button>
+          <button class="rescue-btn complete" id="completeRescueBtn" disabled>
+            <i class="fas fa-flag-checkered"></i> Mark as Mapped
+          </button>
+        </div>
+      </div>
+
+      <div class="route-section">
+        <h4>Get Directions to Emergency Location</h4>
+        <div class="auto-route-notice">
+          <i class="fas fa-info-circle"></i> Route is automatically calculated when you click on a location
+        </div>
+
+        <div id="routeDeviationNotice" class="route-deviation-notice">
+          <i class="fas fa-exclamation-triangle"></i> You have deviated from the route. Recalculating...
+        </div>
+        <div id="routeRecalculatingNotice" class="route-recalculating">
+          <i class="fas fa-sync-alt fa-spin"></i> Recalculating route based on your current location...
+        </div>
+
+        <div class="route-controls">
+          <button class="route-btn" id="calculateRouteBtn">
+            <i class="fas fa-route"></i> Recalculate Route
+          </button>
+          <button class="route-btn secondary" id="clearRouteBtn">
+            <i class="fas fa-times"></i> Clear Route
+          </button>
+        </div>
+        <div id="routeInfo" class="route-info">
+          Click on any emergency location to automatically calculate the route from your current location.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="messaging-modal" id="messagingModal">
+    <div class="messaging-content">
+      <div class="messaging-header">
+        <div class="messaging-title" id="messagingTitle">Chat with Reporter</div>
+        <div class="messaging-close" id="closeMessagingModal">&times;</div>
+      </div>
+      <div class="messaging-body" id="messagingBody">
+      </div>
+      <div class="messaging-footer">
+        <input type="text" class="message-input" id="messageInput" placeholder="Type your message...">
+        <button class="send-btn" id="sendMessageBtn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirmation-modal" id="confirmationModal">
+    <div class="confirmation-content">
+      <div class="confirmation-title" id="confirmationTitle">Confirm Action</div>
+      <div class="confirmation-message" id="confirmationMessage">Are you sure you want to proceed?</div>
+      <div class="confirmation-buttons">
+        <button class="confirm-btn yes" id="confirmYes">Yes</button>
+        <button class="confirm-btn no" id="confirmNo">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-container">
+      <a href="home.html" class="nav-item" id="home-nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="responsehome.html" class="nav-item" id="responsehome-nav-item" style="display: none;">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="track.html" class="nav-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Track</span>
+      </a>
+      <a href="response.html" class="nav-item active" id="response-nav-item" style="display: none;">
+        <i class="fas fa-bullhorn"></i>
+        <span>Response</span>
+      </a>
+      <a href="notification.html" class="nav-item">
+        <i class="fas fa-bell"></i>
+        <span>Notification</span>
+      </a>
+      <a href="history.html" class="nav-item">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </a>
+      <a href="captain.html" class="nav-item" id="captain-nav-item" style="display: none;">
+        <i class="fas fa-users-cog"></i>
+        <span>Mng User</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/session.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd2_QgxGXWa4Vs_xKl5cJg6gpZQxC3sNk&libraries=geometry&callback=initMap"
+    async defer></script>
+  <script src="assets/js/response.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify PIN - RSC</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/create_pin.css" />
+</head>
+<body>
+  <div class="top-header">
+    <h1>RSC</h1>
+    <span>Ready to Serve the Community</span>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h2>Enter Your PIN</h2>
+      <p>Please enter your 4-digit PIN to continue</p>
+    </div>
+
+    <div class="form-box">
+      <p class="pin-instructions">Enter your 4-digit PIN using the numeric keypad</p>
+      
+      <div class="attempts-warning" id="attemptsWarning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="attemptsText">Too many failed attempts. Please try again.</span>
+      </div>
+
+      <div class="error-message" id="errorMessage">
+        <strong>Error:</strong> <span id="errorText">Invalid PIN</span>
+      </div>
+      
+      <form id="pinForm">
+        <div class="pin-container">
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off" autofocus>
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+        </div>
+        
+        <div class="security-note">
+          <i class="fas fa-shield-alt"></i>
+          <span>PIN verification required for security</span>
+        </div>
+        
+        <button type="submit" id="submitBtn" disabled>
+          <span id="buttonText">Verify PIN</span>
+        </button>
+      </form>
+
+      <div class="alternative-options">
+        <p>
+          <a href="login.html?logout=true">Sign in with password instead</a> • 
+          <a href="forgot_pin.html">Forgot PIN?</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>By continuing, you agree to our<br />
+        <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/session.js"></script>
+  <script src="assets/js/llll.js"></script>
+</body>
+</html>

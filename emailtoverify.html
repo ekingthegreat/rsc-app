@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgot Password - RSC</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/emailtoverify.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+<body>
+  <div class="top-header">
+    <h1>RSC</h1>
+    <span>Ready to Serve the Community</span>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h2>Forgot Password</h2>
+      <p>Enter your email to get a password reset link</p>
+    </div>
+
+    <div class="form-box">
+      <div class="error-message" id="errorMessage" style="display: none;"></div>
+      
+      <div class="success-message" id="successMessage" style="display: none;"></div>
+      
+      <form id="passwordForm">
+        <label for="email">Email</label>
+        <div class="password-wrapper">
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+
+        <button type="submit" id="submitBtn">Send Reset Link</button>
+      </form>
+
+      <p class="login-text">
+        Remember your password? <a href="login.html">Back to Sign In</a>
+      </p>
+    </div>
+
+    <div class="footer">
+      <p>By requesting a password reset, you agree to our<br />
+        <a href="term.html">Terms of Service</a> | <a href="privacy.html">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+
+<script src="assets/js/firebaseconfig.js"></script>
+<script src="assets/js/block.js"></script>
+<script src="assets/js/session.js"></script>
+<script src="assets/js/emailtoverify.js"> </script>
+</body>
+</html>

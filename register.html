@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - RSC</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/register.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+
+<body>
+  <div class="top-header">
+    <h1>RSC</h1>
+    <span>Ready to Serve the Community</span>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h1>Sign Up</h1>
+      <p>Make a difference today!</p>
+    </div>
+
+    <div class="form-box">
+      <div class="error-message" id="errorMessage">
+        <strong>Database Permission Error:</strong> Please check your Firebase security rules.
+      </div>
+      
+      <div class="success-message" id="successMessage">
+        <strong>Success!</strong> Your account has been created.
+      </div>
+      
+      <form id="register">
+        <label for="fullname">Full name</label>
+        <input type="text" id="fullname" placeholder="Enter your full name" required />
+
+        <label for="role">Role</label>
+        <select id="role" required>
+          <option value="" disabled selected>Select your role</option>
+          <option value="captain">Barangay Captain</option>
+          <option value="official">Barangay Official</option>
+          <option value="response_team">Response Team</option>
+        </select>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required
+          autocomplete="username" />
+        <div class="username-availability" id="usernameAvailability"></div>
+
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Enter your password" required  autocomplete="current-password"/>
+          <span class="toggle-password" onclick="togglePassword()">
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+        <div class="password-strength">
+          <div class="password-strength-bar" id="passwordStrengthBar"></div>
+        </div>
+        <div class="password-strength-text" id="passwordStrengthText"></div>
+
+        <label for="phone">Phone number</label>
+        <input type="tel" id="phone" name="phone" placeholder="09xx-xxx-xxxx" required autocomplete="tel" />
+
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address" required
+          autocomplete="email" />
+
+        <label for="address">Current Address</label>
+        <select id="address" name="address" required autocomplete="address-level2">
+          <option value="" disabled selected>Select your address</option>
+          <option value="Bacalan">Bacalan</option>
+          <option value="Bangkerohan">Bangkerohan</option>
+          <option value="Buluan">Buluan</option>
+          <option value="Caparan">Caparan</option>
+          <option value="Domandan">Domandan</option>
+          <option value="Don Andres">Don Andres</option>
+          <option value="Doña Josefa">Doña Josefa</option>
+          <option value="Guituan">Guituan</option>
+          <option value="Ipil Heights">Ipil Heights</option>
+          <option value="Labe">Labe</option>
+          <option value="Logan">Logan</option>
+          <option value="Tirso Babiera (Lower Ipil Heights)">Tirso Babiera (Lower Ipil Heights)</option>
+          <option value="Lower Taway">Lower Taway</option>
+          <option value="Lumbia">Lumbia</option>
+          <option value="Maasin">Maasin</option>
+          <option value="Magdaup">Magdaup</option>
+          <option value="Makilas">Makilas</option>
+          <option value="Pangi">Pangi</option>
+          <option value="Poblacion">Poblacion</option>
+          <option value="Sanito">Sanito</option>
+          <option value="Suclema">Suclema</option>
+          <option value="Taway">Taway</option>
+          <option value="Tenan">Tenan</option>
+          <option value="Tiayon">Tiayon</option>
+          <option value="Timalang">Timalang</option>
+          <option value="Tomitom">Tomitom</option>
+          <option value="Upper Pangi">Upper Pangi</option>
+          <option value="Veteran's Village">Veteran's Village</option>
+        </select>
+
+        <button type="submit">Create Account</button>
+      </form>
+
+      <p class="login-text">
+        Already have an account? <a href="login.html">Sign In</a>
+      </p>
+
+      <div class="footer">
+        <p>By creating an account, you agree to our<br />
+          <a href="term.html">Terms of Service</a> | <a href="privacy.html">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="successModal">
+    <div class="modal">
+      <div class="modal-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2>Registration Complete!</h2>
+      <p>Your account has been successfully created and is pending approval.</p>
+      <p>You will be redirected to the pending page in <span id="countdown">5</span> seconds.</p>
+      <div class="modal-countdown" id="modalCountdown"></div>
+      <button class="modal-button" id="goNowButton">Go Now</button>
+    </div>
+  </div>
+<script src="assets/js/session.js"></script>
+  <script src="assets/js/register.js"></script>
+
+</body>
+
+</html>

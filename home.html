@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSC Community Feed</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/responsehome.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+<body>
+  <div class="header">
+    <h1> RSC</h1>
+    <small>Ready to serve the community</small>
+  </div>
+
+  <div id="imageModal" class="modal" style="display: none;">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <div id="galleryModal" class="gallery-modal">
+    <div class="gallery-container">
+      <div class="gallery-header">
+        <div class="gallery-count" id="galleryCount">1 / 5</div>
+        <button class="gallery-close">&times;</button>
+      </div>
+      <div class="gallery-main">
+        <button class="gallery-nav gallery-prev">&lt;</button>
+        <img class="gallery-main-image" id="galleryMainImage" src="" alt="">
+        <button class="gallery-nav gallery-next">&gt;</button>
+      </div>
+      <div class="gallery-thumbnails" id="galleryThumbnails">
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-events">
+    <h3>Upcoming Events</h3>
+    <div id="mobileEventsList">
+    </div>
+  </div>
+
+  <div class="main-container">
+    <div class="content">
+      <div class="posts-container" id="postsContainer">
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <h3>Upcoming Events</h3>
+        <div id="desktopEventsList">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-container">
+      <a href="home.html" class="nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="track.html" class="nav-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Track</span>
+      </a>
+  
+      <a href="notification.html" class="nav-item">
+        <i class="fas fa-bell"></i>
+        <span>Notification</span>
+      </a>
+      <a href="history.html" class="nav-item">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </a>
+      <a href="captain.html" class="nav-item" id="captain-nav-item" style="display: none;">
+        <i class="fas fa-users-cog"></i>
+        <span>Mng User</span>
+      </a>
+
+      <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/block.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>

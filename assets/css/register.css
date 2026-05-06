@@ -1,0 +1,638 @@
+/* Your CSS remains unchanged */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #b30000;
+    --primary-dark: #8a0000;
+    --primary-light: rgba(179, 0, 0, 0.1);
+    --secondary: #f8f8f8;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-light: #999999;
+    --white: #ffffff;
+    --border: #e0e0e0;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --weak: #ff4d4d;
+    --medium: #ffa64d;
+    --strong: #33cc33;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Top Header Bar */
+.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: var(--white);
+    text-align: center;
+    padding: 15px 0;
+    box-shadow: var(--shadow);
+    z-index: 100;
+}
+
+.top-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.top-header span {
+    font-size: 0.85rem;
+    font-weight: 300;
+    opacity: 0.9;
+    display: block;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin-top: 100px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.form-box {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+label {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: -10px;
+}
+
+input,
+select {
+    padding: 1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(179, 0, 0, 0.15);
+    outline: none;
+    background-color: var(--white);
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23b30000' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-light);
+}
+
+/* Password strength indicator */
+.password-strength {
+    margin-top: 8px;
+    height: 5px;
+    border-radius: 3px;
+    background: #eee;
+    overflow: hidden;
+    position: relative;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0;
+    border-radius: 3px;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.password-strength-text {
+    font-size: 0.75rem;
+    margin-top: 5px;
+    text-align: right;
+    height: 16px;
+}
+
+.strength-weak {
+    background: var(--weak);
+    width: 33%;
+}
+
+.strength-medium {
+    background: var(--medium);
+    width: 66%;
+}
+
+.strength-strong {
+    background: var(--strong);
+    width: 100%;
+}
+
+button {
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: var(--white);
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.25);
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+button:hover {
+    background: linear-gradient(to right, var(--primary-dark), #700000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(179, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.login-text {
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.login-text a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.login-text a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.footer a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Error message styling */
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c62828;
+    display: none;
+}
+
+/* Success message styling */
+.success-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2e7d32;
+    display: none;
+}
+
+/* Modal styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background-color: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(30px);
+    transition: transform 0.4s ease;
+}
+
+.modal-overlay.active .modal {
+    transform: translateY(0);
+}
+
+.modal-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.modal h2 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.modal p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.modal-countdown {
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.modal-button {
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-button:hover {
+    background: linear-gradient(to right, var(--primary-dark), #700000);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .container {
+        padding: 0 1rem;
+        margin-top: 120px;
+    }
+
+    .form-box {
+        padding: 2rem 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .top-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .modal {
+        padding: 1.5rem;
+    }
+
+    .modal-icon {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .form-box {
+        padding: 1.8rem 1.2rem;
+    }
+
+    .header h1 {
+        font-size: 1.6rem;
+    }
+
+    input,
+    select {
+        padding: 0.8rem;
+    }
+
+    button {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+}
+
+/* Extra small devices (phones, 320px and down) */
+@media (max-width: 320px) {
+    body {
+        padding: 10px;
+    }
+
+    .top-header {
+        padding: 12px 0;
+    }
+
+    .top-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .top-header span {
+        font-size: 0.75rem;
+    }
+
+    .container {
+        margin-top: 110px;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+    }
+
+    .form-box {
+        padding: 1.5rem 1rem;
+    }
+
+    input,
+    select {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .login-text {
+        font-size: 0.9rem;
+    }
+
+    .password-strength-text {
+        font-size: 0.7rem;
+    }
+}
+
+/* Tablet devices (768px and up) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        max-width: 500px;
+        margin-top: 120px;
+    }
+
+    .header h1 {
+        font-size: 2.2rem;
+    }
+
+    .header p {
+        font-size: 1.2rem;
+    }
+
+    .form-box {
+        padding: 3rem 2.5rem;
+    }
+
+    input,
+    select {
+        padding: 1.1rem;
+        font-size: 1.1rem;
+    }
+
+    button {
+        padding: 1.1rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* Large devices (laptops/desktops, 1024px and up) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+/* Landscape orientation for mobile devices */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+        justify-content: flex-start;
+    }
+
+    .container {
+        margin-top: 80px;
+        margin-bottom: 20px;
+    }
+
+    .form-box {
+        padding: 1.5rem;
+    }
+}
+
+  .username-availability {
+      font-size: 0.85rem;
+      margin-top: 5px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+    .username-availability.checking {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+
+    .username-availability.available {
+      background-color: #d1edff;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .username-availability.taken {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .username-availability i {
+      margin-right: 5px;
+    }
+
+    .username-availability.available i {
+      color: #28a745;
+    }
+
+    .username-availability.taken i {
+      color: #dc3545;
+    }
+
+    .username-availability.checking i {
+      color: #ffc107;
+    }
+
+    /* Additional CSS for the new elements */
+    .forgot-password-text {
+      text-align: center;
+      margin: 15px 0;
+    }
+    
+    .forgot-password-text a {
+      color: #4a90e2;
+      text-decoration: none;
+    }
+    
+    .forgot-password-text a:hover {
+      text-decoration: underline;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .modal-button.secondary {
+      background-color: #6c757d;
+    }
+    
+    .modal-button.secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }

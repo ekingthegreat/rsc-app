@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSC Notifications</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/notification.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  
+  <style>
+ 
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>RSC</h1>
+    <small>Ready to serve the community</small>
+  </div>
+
+  <div class="main-container">
+    <div class="content">
+      <div class="page-title">
+        <h2>Notifications</h2>
+        <div class="page-subtitle">Don't miss any critical information or warnings</div>
+      </div>
+
+      <div class="clear-all-container">
+        <button class="clear-all-btn" id="clearAllBtn" disabled>
+          <i class="fas fa-trash-alt"></i>
+          Clear All Notifications
+        </button>
+      </div>
+
+      <div class="notifications-list" id="notificationsList">
+        <div class="notification-item">
+          <div class="notification-details">
+            <div class="notification-title">Loading notifications...</div>
+            <div class="notification-message">Please wait while we load your notifications</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-container">
+      <a href="home.html" class="nav-item" id="home-nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="responsehome.html" class="nav-item" id="responsehome-nav-item" style="display: none;">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="track.html" class="nav-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Track</span>
+      </a>
+      <a href="response.html" class="nav-item" id="response-nav-item" style="display: none;">
+        <i class="fas fa-bullhorn"></i>
+        <span>Response</span>
+      </a>
+
+      <a href="notification.html" class="nav-item active" id="notification-nav-item">
+        <i class="fas fa-bell"></i>
+        <span>Notification</span>
+      </a>
+      <a href="history.html" class="nav-item">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </a>
+      <a href="captain.html" class="nav-item" id="captain-nav-item" style="display: none;">
+        <i class="fas fa-users-cog"></i>
+        <span>Mng User</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/block.js"></script>
+  <script src="assets/js/notification.js"></script>
+</body>
+
+</html>

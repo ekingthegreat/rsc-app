@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSC Map</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/track.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+</head>
+
+<body>
+  <div class="header">
+    <h1>RSC</h1>
+    <small>Ready to serve the community</small>
+  </div>
+
+  <div class="main-container">
+    <div class="content">
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-title">Legend</div>
+        <div class="legend-grid">
+          <div class="legend-item">
+            <div class="legend-icon landslide">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Landslide</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon fire">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Fire</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon earthquake">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Earthquake</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon flood">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Flood</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon storm">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Storm Surge</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-icon ems">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Emergency Medical Services</span>
+          </div>
+        </div>
+      </div>
+      <div class="caption">
+        <small>Emergency SOS with media reporting</small>
+      </div>
+
+      <div class="emergency-buttons">
+        <a href="#" class="emergency-btn" data-type="fire">
+          <i class="fas fa-fire"></i>
+          <span>Fire</span>
+        </a>
+        <a href="#" class="emergency-btn" data-type="flood">
+          <i class="fas fa-water"></i>
+          <span>Flood</span>
+        </a>
+        <a href="#" class="emergency-btn" data-type="ems">
+          <i class="fas fa-ambulance"></i>
+          <span>EMS</span>
+        </a>
+        <a href="#" class="emergency-btn" data-type="landslide">
+          <i class="fas fa-mountain"></i>
+          <span>Landslide</span>
+        </a>
+        <a href="#" class="emergency-btn" data-type="earthquake">
+          <i class="fas fa-house-crack"></i>
+          <span>Earthquake</span>
+        </a>
+        <a href="#" class="emergency-btn" data-type="storm">
+          <i class="fas fa-wave-square"></i>
+          <span>Storm Surge</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="camera-modal" id="cameraModal">
+    <div class="camera-content">
+      <div class="camera-header">
+        <h3>Document Emergency</h3>
+        <button class="close-camera" id="closeCamera">&times;</button>
+      </div>
+      <div class="camera-body">
+        <div class="camera-section">
+          <h4>Take Photo</h4>
+
+          <div class="camera-switch-container">
+            <button class="camera-switch-btn" id="switchCamera">
+              <i class="fas fa-sync-alt"></i> Switch Camera
+            </button>
+          </div>
+          <div class="camera-indicator" id="cameraIndicator">
+            Using: Back Camera
+          </div>
+
+          <div class="camera-preview" id="photoPreviewContainer">
+            <video id="photoPreview" autoplay playsinline></video>
+          </div>
+          <div class="camera-controls">
+            <button id="capturePhoto" class="camera-btn">
+              <i class="fas fa-camera"></i> Capture
+            </button>
+            <div class="action-buttons" id="photoActionButtons">
+              <button class="action-btn send" id="sendPhoto">
+                <i class="fas fa-paper-plane"></i> Send
+              </button>
+              <button class="action-btn retake" id="retakePhoto">
+                <i class="fas fa-redo"></i> Retake
+              </button>
+            </div>
+            <canvas id="photoCanvas" style="display: none;"></canvas>
+          </div>
+        </div>
+        <div class="camera-section">
+          <h4>Record Video</h4>
+          <div class="camera-preview" id="videoPreviewContainer">
+            <video id="videoPreview" autoplay playsinline></video>
+          </div>
+          <div class="camera-controls">
+            <button id="startRecording" class="camera-btn">
+              <i class="fas fa-video"></i> Start Recording
+            </button>
+            <button id="stopRecording" class="camera-btn" disabled>
+              <i class="fas fa-stop"></i> Stop
+            </button>
+            <div class="action-buttons" id="videoActionButtons">
+              <button class="action-btn send" id="sendVideo">
+                <i class="fas fa-paper-plane"></i> Send
+              </button>
+              <button class="action-btn cancel" id="cancelVideo">
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-modal" id="reportModal">
+    <div class="report-content">
+      <div class="report-header">
+        <h3 id="reportTitle">Report Details</h3>
+        <button class="close-report" id="closeReport">&times;</button>
+      </div>
+      <div class="report-body">
+        <div class="report-info">
+          <p><strong>Emergency Type:</strong> <span id="reportType"></span></p>
+          <p><strong>Reported by:</strong> <span id="reportReporter"></span></p>
+          <p><strong>Time:</strong> <span id="reportTime"></span></p>
+          <p><strong>Date:</strong> <span id="reportDate"></span></p>
+          <p><strong>Status:</strong> <span id="reportStatus"></span></p>
+          <p><strong>Location:</strong> <span id="reportLocation"></span></p>
+          <p><strong>Address:</strong> <span id="reportAddress"></span></p>
+        </div>
+        <div class="report-media" id="reportMediaContainer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="response-notification-modal" id="responseNotificationModal">
+    <div class="response-notification-content">
+      <div class="response-notification-header">
+        <h3><i class="fas fa-ambulance"></i> Response Team Assigned</h3>
+        <button class="close-response-notification" id="closeResponseNotification">&times;</button>
+      </div>
+      <div class="response-notification-body">
+        <div class="response-info">
+          <div class="response-alert">
+            <i class="fas fa-check-circle"></i>
+            <span>A response team has been assigned to your emergency report!</span>
+          </div>
+
+          <div class="response-details">
+            <h4>Emergency Details</h4>
+            <div class="detail-item">
+              <strong>Type:</strong> <span id="notificationEmergencyType">Fire</span>
+            </div>
+            <div class="detail-item">
+              <strong>Reported:</strong> <span id="notificationReportTime">Today at 14:30</span>
+            </div>
+            <div class="detail-item">
+              <strong>Location:</strong> <span id="notificationLocation">Your reported location</span>
+            </div>
+          </div>
+
+          <div class="response-map-container">
+            <div class="map-title">
+              <i class="fas fa-map-marked-alt"></i> Live Response Tracking
+            </div>
+            <div id="responseMap" class="response-map"></div>
+          </div>
+
+          <div class="route-info-section">
+            <h4>Response Team Information</h4>
+            <div class="detail-item">
+              <strong>Team Member:</strong> <span id="responseTeamName">John Doe</span>
+            </div>
+            <div class="detail-item">
+              <strong>Status:</strong> <span class="status-badge en-route">En Route</span>
+            </div>
+            <div class="detail-item">
+              <strong>Estimated Arrival:</strong> <span id="estimatedTime">15-20 minutes</span>
+            </div>
+            <div class="detail-item">
+              <strong>Distance:</strong> <span id="responseDistance">5.2 km</span>
+            </div>
+          </div>
+
+          <div class="route-steps">
+            <h4><i class="fas fa-route"></i> Route Information</h4>
+            <div id="routeStepsContainer">
+            </div>
+          </div>
+
+          <div class="safety-tips">
+            <h4><i class="fas fa-lightbulb"></i> Safety Tips</h4>
+            <ul>
+              <li>Stay in a safe location until help arrives</li>
+              <li>Keep your phone accessible</li>
+              <li>Follow instructions from emergency personnel</li>
+              <li>If situation worsens, move to a safer location</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="response-notification-footer">
+        <button class="acknowledge-btn" id="acknowledgeNotification">
+          <i class="fas fa-check"></i> Acknowledge
+        </button>
+        <button class="view-details-btn" id="viewEmergencyDetails">
+          <i class="fas fa-info-circle"></i> View Status
+        </button>
+        <button class="message-btn" id="openMessagingBtn"
+          style="background: #17a2b8; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer;">
+          <i class="fas fa-comment"></i> Message
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="messaging-modal" id="messagingModal">
+    <div class="messaging-content">
+      <div class="messaging-header">
+        <div class="messaging-title" id="messagingTitle">Chat with Response Team</div>
+        <div class="messaging-close" id="closeMessagingModal">&times;</div>
+      </div>
+      <div class="messaging-body" id="messagingBody">
+      </div>
+      <div class="messaging-footer">
+        <input type="text" class="message-input" id="messageInput" placeholder="Type your message...">
+        <button class="send-btn" id="sendMessageBtn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-container">
+      <a href="home.html" class="nav-item" id="home-nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="responsehome.html" class="nav-item" id="responsehome-nav-item" style="display: none;">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="track.html" class="nav-item active">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Track</span>
+      </a>
+      <a href="response.html" class="nav-item" id="response-nav-item" style="display: none;">
+        <i class="fas fa-bullhorn"></i>
+        <span>Response</span>
+      </a>
+      <a href="notification.html" class="nav-item" id="notification-nav-item">
+        <i class="fas fa-bell"></i>
+        <span>Notification</span>
+      </a>
+      <a href="history.html" class="nav-item">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </a>
+      <a href="captain.html" class="nav-item" id="captain-nav-item" style="display: none;">
+        <i class="fas fa-users-cog"></i>
+        <span>Mng User</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </div>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd2_QgxGXWa4Vs_xKl5cJg6gpZQxC3sNk&callback=initMap&libraries=geometry"
+    async defer></script>
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/supabaseconfig.js"></script>
+  <script src="assets/js/session.js"></script>
+  <script src="assets/js/block.js"></script>
+  <script src="assets/js/track.js"></script>
+</body>
+
+</html>

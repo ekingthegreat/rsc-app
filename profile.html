@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSC Profile - Approved</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/profile.css">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+</head>
+
+<body>
+  <div class="header">
+    <h1>RSC</h1>
+    <small>Ready to serve the community</small>
+  </div>
+
+  <div class="main-container">
+    <div class="content">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">
+          <i class="fas fa-user" id="avatar-icon"></i>
+        </div>
+        <div class="profile-name" id="profile-name">Loading...</div>
+        <div class="profile-contact" id="profile-contact">Loading...</div>
+        <div class="status-badge" id="status-badge">Loading...</div>
+
+        <div class="upload-section" id="upload-section" style="display: none;">
+          <input type="file" id="file-input" accept="image/*" style="display: none;">
+          <label for="file-input" class="upload-btn">
+            <i class="fas fa-camera"></i> Change Profile
+          </label>
+          <div class="upload-status" id="upload-status"></div>
+        </div>
+      </div>
+
+      <div class="status-message" id="status-message">
+        <div class="status-icon">
+          <i class="fas fa-clock" id="status-message-icon"></i>
+        </div>
+        <div class="status-title" id="status-message-title">Account Pending Approval</div>
+        <div class="status-desc" id="status-message-desc">
+          Your account is currently under review. You will be notified once your account has been approved.
+        </div>
+      </div>
+
+      <div class="account-section">
+        <div class="section-title">Account Information</div>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Member Type</div>
+            <div class="info-value" id="info-member">Loading...</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Username</div>
+            <div class="info-value" id="info-username">Loading...</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Email</div>
+            <div class="info-value" id="info-email">Loading...</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Address</div>
+            <div class="info-value" id="info-address">Loading...</div>
+          </div>
+        </div>
+
+        <div class="section-title">Account Settings</div>
+        <ul class="menu-list">
+          <li class="menu-item" data-link="edit_profile.html">
+            <div class="menu-icon">
+              <i class="fas fa-user-edit"></i>
+            </div>
+            <div class="menu-text">Edit Profile</div>
+            <div class="menu-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </li>
+          <li class="menu-item" id="change-password-item">
+            <div class="menu-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="menu-text">Change Password</div>
+            <div class="menu-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </li>
+          <li class="menu-item" id="change-pin-item">
+            <div class="menu-icon">
+              <i class="fas fa-key"></i>
+            </div>
+            <div class="menu-text">Change/Set Pin</div>
+            <div class="menu-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </li>
+
+          <li class="menu-item" data-link="train.html">
+            <div class="menu-icon">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <div class="menu-text">Set Facial Recognition</div>
+            <div class="menu-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </li>
+          <li class="menu-item" data-link="term.html">
+            <div class="menu-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="menu-text">Privacy & Security</div>
+            <div class="menu-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="logout-section">
+        <button class="logout-btn">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="password-modal" class="password-modal-overlay">
+    <div class="password-modal-container">
+      <div class="password-modal-header">
+        <h3>
+          <i class="fas fa-lock"></i>
+          <span id="password-modal-title">Change Password</span>
+        </h3>
+        <p id="password-modal-subtitle">Update your account password</p>
+      </div>
+      
+      <div class="password-modal-content">
+        <div class="password-instructions" id="password-instructions">
+          Enter your current password and set a new password
+        </div>
+        
+        <div class="password-input-section">
+          <label for="current-password">Current Password</label>
+          <input type="password" class="password-input" id="current-password" placeholder="Enter current password">
+        </div>
+
+        <div class="password-input-section">
+          <label for="new-password">New Password</label>
+          <input type="password" class="password-input" id="new-password" placeholder="Enter new password">
+        </div>
+
+        <div class="password-input-section">
+          <label for="confirm-password">Confirm New Password</label>
+          <input type="password" class="password-input" id="confirm-password" placeholder="Confirm new password">
+        </div>
+
+        <div id="password-message" class="password-message"></div>
+
+        <div class="password-action-buttons">
+          <button id="cancel-password" class="password-cancel-button">Cancel</button>
+          <button id="save-password" class="password-button">
+            <span id="save-password-text">Update Password</span>
+            <div class="loading-spinner" id="save-password-spinner"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pin-modal" class="pin-modal-overlay">
+    <div class="pin-modal-container">
+      <div class="pin-modal-header">
+        <h3>
+          <i class="fas fa-key"></i>
+          <span id="pin-modal-title">Set Up PIN</span>
+        </h3>
+        <p id="pin-modal-subtitle">Create a secure 4-digit PIN for your account</p>
+      </div>
+      
+      <div class="pin-modal-content">
+        <div class="pin-instructions" id="pin-instructions">
+          Enter your new 4-digit PIN to secure your account
+        </div>
+        
+        <div id="current-pin-section" style="display: none;">
+          <div class="pin-input-section">
+            <label>Current PIN</label>
+            <div class="pin-container">
+              <input type="password" class="pin-box" id="current-pin-1" maxlength="1" data-pin-index="1" inputmode="numeric">
+              <input type="password" class="pin-box" id="current-pin-2" maxlength="1" data-pin-index="2" inputmode="numeric">
+              <input type="password" class="pin-box" id="current-pin-3" maxlength="1" data-pin-index="3" inputmode="numeric">
+              <input type="password" class="pin-box" id="current-pin-4" maxlength="1" data-pin-index="4" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+
+        <div class="pin-input-section">
+          <label id="new-pin-label">New PIN</label>
+          <div class="pin-container">
+            <input type="password" class="pin-box" id="new-pin-1" maxlength="1" data-pin-index="1" inputmode="numeric">
+            <input type="password" class="pin-box" id="new-pin-2" maxlength="1" data-pin-index="2" inputmode="numeric">
+            <input type="password" class="pin-box" id="new-pin-3" maxlength="1" data-pin-index="3" inputmode="numeric">
+            <input type="password" class="pin-box" id="new-pin-4" maxlength="1" data-pin-index="4" inputmode="numeric">
+          </div>
+        </div>
+
+        <div class="pin-input-section">
+          <label id="confirm-pin-label">Confirm PIN</label>
+          <div class="pin-container">
+            <input type="password" class="pin-box" id="confirm-pin-1" maxlength="1" data-pin-index="1" inputmode="numeric">
+            <input type="password" class="pin-box" id="confirm-pin-2" maxlength="1" data-pin-index="2" inputmode="numeric">
+            <input type="password" class="pin-box" id="confirm-pin-3" maxlength="1" data-pin-index="3" inputmode="numeric">
+            <input type="password" class="pin-box" id="confirm-pin-4" maxlength="1" data-pin-index="4" inputmode="numeric">
+          </div>
+        </div>
+
+        <div id="pin-message" class="pin-message"></div>
+
+        <div class="security-note">
+          <i class="fas fa-shield-alt"></i>
+          <span>Your PIN is encrypted and securely stored</span>
+        </div>
+
+        <div class="pin-action-buttons">
+          <button id="cancel-pin" class="pin-cancel-button">Cancel</button>
+          <button id="save-pin" class="pin-button">
+            <span id="save-pin-text">Set PIN</span>
+            <div class="loading-spinner" id="save-pin-spinner"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-container">
+      <a href="home.html" class="nav-item" id="home-nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+
+      <a href="responsehome.html" class="nav-item" id="responsehome-nav-item" style="display: none;">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+
+      <a href="track.html" class="nav-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Track</span>
+      </a>
+      <a href="response.html" class="nav-item" id="response-nav-item" style="display: none;">
+        <i class="fas fa-bullhorn"></i>
+        <span>Response</span>
+      </a>
+
+      <a href="notification.html" class="nav-item">
+        <i class="fas fa-bell"></i>
+        <span>Notification</span>
+      </a>
+      <a href="history.html" class="nav-item">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </a>
+      <a href="captain.html" class="nav-item" id="captain-nav-item" style="display: none;">
+        <i class="fas fa-users-cog"></i>
+        <span>Mng User</span>
+      </a>
+
+      <a href="profile.html" class="nav-item active">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </div>
+
+<script src="assets/js/firebaseconfig.js"></script>
+<script src="assets/js/block.js"></script>
+<script src="assets/js/session.js"></script>
+<script src="assets/js/profile.js"></script>
+</body>
+</html>

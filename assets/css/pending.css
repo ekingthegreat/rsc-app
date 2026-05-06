@@ -1,0 +1,369 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #b30000;
+    --primary-dark: #8a0000;
+    --secondary: #f8f8f8;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-light: #999999;
+    --white: #ffffff;
+    --border: #e0e0e0;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --pending: #ff9800;
+    --approved: #4caf50;
+    --rejected: #f44336;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+/* Fixed Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: var(--white);
+    text-align: center;
+    padding: 12px 0;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.header small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* Main Content */
+.main-container {
+    display: flex;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+}
+
+.content {
+    flex: 1;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 0;
+    overflow: hidden;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+/* Profile Header */
+.profile-header {
+    background: #CCCCCC;
+    color: var(--white);
+    padding: 25px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-avatar i {
+    font-size: 3rem;
+    color: var(--white);
+}
+
+.profile-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+}
+
+.profile-contact {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.status-pending {
+    background-color: rgba(255, 152, 0, 0.15);
+    color: var(--pending);
+    border: 1px solid var(--pending);
+}
+
+.status-approved {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: var(--approved);
+    border: 1px solid var(--approved);
+}
+
+.status-rejected {
+    background-color: rgba(244, 67, 54, 0.15);
+    color: var(--rejected);
+    border: 1px solid var(--rejected);
+}
+
+/* Upload Section */
+.upload-section {
+    padding: 20px;
+    text-align: center;
+    display: none;
+    /* Hidden by default, shown when approved */
+}
+
+.upload-btn {
+    display: inline-block;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.upload-btn:hover {
+    background: linear-gradient(to right, var(--primary-dark), #700000);
+}
+
+#file-input {
+    display: none;
+}
+
+/* Account Section */
+.account-section {
+    padding: 20px;
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Status Message */
+.status-message {
+    padding: 20px;
+    text-align: center;
+    background-color: #fff9e6;
+    border-radius: 8px;
+    margin: 20px;
+    display: none;
+    /* Hidden by default, shown when pending/rejected */
+}
+
+.status-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.status-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.status-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Logout Button */
+.logout-section {
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.logout-btn:hover {
+    background-color: #fff5f5;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .main-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.3rem;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name {
+        font-size: 1.2rem;
+    }
+
+    body {
+        padding-top: 65px;
+        padding-bottom: 15px;
+    }
+
+    .content {
+        max-height: calc(100vh - 80px);
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 10px 0;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .header small {
+        font-size: 0.7rem;
+    }
+
+    .profile-header {
+        padding: 20px 15px;
+    }
+
+    .profile-avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .profile-avatar i {
+        font-size: 2.5rem;
+    }
+
+    .account-section {
+        padding: 15px;
+    }
+
+    body {
+        padding-top: 60px;
+        padding-bottom: 10px;
+    }
+
+    .content {
+        max-height: calc(100vh - 70px);
+    }
+}
+
+@media (max-width: 360px) {
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-name {
+        font-size: 1.1rem;
+    }
+
+    .profile-contact {
+        font-size: 0.8rem;
+    }
+
+    .info-value {
+        font-size: 0.9rem;
+    }
+}

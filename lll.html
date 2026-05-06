@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create PIN - RSC</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/create_pin.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+   
+  </style>
+</head>
+<body>
+  <div class="top-header">
+    <h1>RSC</h1>
+    <span>Ready to Serve the Community</span>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h2>Create Secure PIN</h2>
+      <p>Protect your account with a 4-digit personal identification number</p>
+    </div>
+
+    <div class="form-box">
+      <p class="pin-instructions">Enter your 4-digit PIN using the numeric keypad</p>
+      
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i> PIN created successfully! Redirecting...
+      </div>
+
+      <div class="error-message" id="errorMessage">
+        <strong>Error:</strong> <span id="errorText"></span>
+      </div>
+
+      <form id="pinForm">
+        <div class="pin-container">
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off" autofocus>
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+          <input type="password" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+        </div>
+        
+        <div class="security-note">
+          <i class="fas fa-shield-alt"></i>
+          <span>Your PIN is encrypted and securely stored</span>
+        </div>
+        
+        <button type="submit" id="submitBtn" disabled>
+          <span id="buttonText">Continue</span>
+        </button>
+      </form>
+
+      <div class="skip-pin">
+        <a href="home.html" onclick="skipPIN()">Skip for now</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>By continuing, you agree to our<br />
+        <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/session.js"></script>
+  <script src="assets/js/lll.js"></script>
+</body>
+</html>

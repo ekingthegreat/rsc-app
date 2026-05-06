@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RSC Profile - Approval Status</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/pending.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="assets/js/session.js"></script>
+</head>
+<body>
+  <div class="header">
+    <h1>RSC</h1>
+    <small>Ready to serve the community</small>
+  </div>
+
+  <div class="main-container">
+    <div class="content">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">
+          <i class="fas fa-user" id="avatar-icon"></i>
+        </div>
+        <div>
+          <div class="profile-name" id="profile-name">Loading...</div>
+          <div class="profile-contact" id="profile-contact">Loading...</div>
+        </div>
+
+        <div class="status-badge" id="status-badge">Pending Approval</div>
+
+        <div class="upload-section" id="upload-section">
+          <input type="file" id="file-input" accept="image/*" style="display:none">
+          <label for="file-input" class="upload-btn">
+            <i class="fas fa-camera"></i> Upload Photo
+          </label>
+        </div>
+      </div>
+
+      <div class="status-message" id="status-message">
+        <div class="status-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="status-title">Your account is under review</div>
+        <div class="status-desc">
+          Your registration is currently being processed. You will be notified once your account has been approved.
+          This usually takes 24-48 hours. Thank you for your patience.
+        </div>
+      </div>
+
+      <div class="account-section">
+        <div class="section-title">Account Information</div>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Member Type</div>
+            <div class="info-value" id="info-member">Loading...</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Username</div>
+            <div class="info-value" id="info-username">Loading...</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Email</div>
+            <div class="info-value" id="info-email">Loading...</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Address</div>
+            <div class="info-value" id="info-address">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logout-section">
+        <button class="logout-btn">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/firebaseconfig.js"></script>
+  <script src="assets/js/pending.js"></script>
+</body>
+</html>

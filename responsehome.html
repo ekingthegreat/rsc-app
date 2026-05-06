@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RSC Community Feed</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="stylesheet" href="assets/css/responsehome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="assets/js/firebaseconfig.js"></script>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1> RSC</h1>
+        <small>Ready to serve the community</small>
+    </div>
+
+    <div class="page-header">
+        <div class="header-buttons">
+            <button class="submit-btn" id="newEventBtn">
+                <i class="fas fa-calendar-plus"></i> New Event
+            </button>
+            <button class="submit-btn" id="newAnnouncementBtn">
+                <i class="fas fa-bullhorn"></i> New Announcement
+            </button>
+        </div>
+    </div>
+
+    <div class="announcement-form" id="announcementForm">
+        <h3 class="form-title">Create New Announcement</h3>
+
+        <div class="upload-section" id="uploadSection">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <p class="upload-text">Drag & drop your images here or click to browse</p>
+            <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+            <button class="btn-upload" id="uploadBtn">
+                <i class="fas fa-upload"></i> Upload Images
+            </button>
+            <div id="imagePreviews" class="image-previews">
+            </div>
+        </div>
+
+        <textarea class="description-box" id="announcementText" placeholder="Type your announcement here..."></textarea>
+        <button class="submit-btn" id="publishAnnouncementBtn">
+            <i class="fas fa-paper-plane"></i> Publish
+        </button>
+    </div>
+
+    <div class="announcement-form" id="eventForm">
+        <h3 class="form-title" id="eventFormTitle">Create New Event</h3>
+
+        <div class="form-group">
+            <label class="form-label">Event Title</label>
+            <input type="text" id="eventTitle" class="form-input" placeholder="Enter event title">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Date & Time</label>
+            <div class="datetime-group">
+                <input type="date" id="eventDate" class="form-input" min="">
+                <input type="time" id="eventTime" class="form-input">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Participants</label>
+            <input type="text" id="eventparticipant" class="form-input" placeholder="Who should attend">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Location</label>
+            <input type="text" id="eventLocation" class="form-input" placeholder="Enter event location">
+        </div>
+
+        <button type="button" id="createEventBtn" class="submit-btn">
+            <i class="fas fa-paper-plane"></i> Create Event
+        </button>
+
+        <button type="button" id="updateEventBtn" class="submit-btn" style="display: none;">
+            <i class="fas fa-save"></i> Update Event
+        </button>
+
+        <button type="button" id="cancelEditBtn" class="submit-btn" style="background-color: #6c757d; display: none;">
+            <i class="fas fa-times"></i> Cancel Edit
+        </button>
+
+        <input type="hidden" id="editingEventId" value="">
+        <input type="hidden" id="editingEventKey" value="">
+    </div>
+
+    <div id="imageModal" class="modal" style="display: none;">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-container">
+            <div class="gallery-header">
+                <div class="gallery-count" id="galleryCount">1 / 5</div>
+                <button class="gallery-close">&times;</button>
+            </div>
+            <div class="gallery-main">
+                <button class="gallery-nav gallery-prev">&lt;</button>
+                <img class="gallery-main-image" id="galleryMainImage" src="" alt="">
+                <button class="gallery-nav gallery-next">&gt;</button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+            </div>
+        </div>
+    </div>
+    <div class="mobile-events">
+        <h3>Upcoming Events</h3>
+        <div id="mobileEventsList">
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="content">
+            <div class="posts-container" id="postsContainer">
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Upcoming Events</h3>
+                <div id="desktopEventsList">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-container">
+            <a href="responsehome.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="track.html" class="nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Track</span>
+            </a>
+            <a href="response.html" class="nav-item" id="response-nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>Response</span>
+            </a>
+            <a href="notification.html" class="nav-item">
+                <i class="fas fa-bell"></i>
+                <span>Notification</span>
+            </a>
+            <a href="history.html" class="nav-item">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+    <script src="assets/js/block.js"></script>
+    <script src="assets/js/session.js"></script>
+    <script src="assets/js/responsehome.js"></script>
+</body>
+
+</html>

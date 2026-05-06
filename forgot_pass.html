@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create PIN - RSC</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/forgot_pass.css" />
+</head>
+
+<body>
+  <div class="top-header">
+    <h1>RSC</h1>
+    <span>Ready to Serve the Community</span>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h2>Forgot Password</h2>
+      <p>Enter your verification code</p>
+    </div>
+
+    <div class="form-box">
+      <p class="pin-instructions">Verification code</p>
+
+      <form id="pinForm">
+        <div class="pin-container">
+          <input type="text" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off" autofocus>
+          <input type="text" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+          <input type="text" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+          <input type="text" maxlength="1" class="pin-box" inputmode="numeric" autocomplete="off">
+        </div>
+
+
+
+        <button type="submit" id="submitBtn" disabled>Continue</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      <p>By continuing, you agree to our<br />
+        <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+  <script src="assets/js/session.js"></script>
+  <script src="assets/js/forgotpass.js"></script>
+</body>
+
+</html>
