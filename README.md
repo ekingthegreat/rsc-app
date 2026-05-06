@@ -41,15 +41,12 @@ RSC App is designed to improve emergency response efficiency by enabling users t
 This project is designed to be easily converted into a mobile application using:
 
 ### 📱 Progressive Web App (PWA
-- Offline capability with service worker support
 - App-like experience without Play Store dependency
 - Add to Home Screen support
 
 ### 📦 WebView Mobile App (Android)
-- Wrap the web app into a native Android application
 - Uses Android WebView component
 - Can access device features (camera, notifications, storage)
-- Can be deployed to Google Play Store
 
 ### 🚀 Future Expansion
 - Native mobile app migration (React Native / Flutter optional)
@@ -60,7 +57,7 @@ This project is designed to be easily converted into a mobile application using:
 ## 🛠️ Tech Stack
 
 - Frontend: HTML, CSS, JavaScript  
-- Backend Services: Firebase (Authentication, Firestore, Realtime Database)  
+- Backend Services: Firebase (Authentication, Realtime Database)  
 - Media Handling: Browser Camera API (photo/video capture)  
 - Deployment: Web + Mobile (PWA/WebView)
 
